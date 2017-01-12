@@ -53,7 +53,7 @@ sudo docker exec -ti lumen_avatar_php phpunit --stderr
 ```
 ## Methods AVAILABLE
 
-Check the Avatar_API.raml file
+Check the [Avatar_API.raml](https://github.com/matiass/docker-lumen-avatar-api/blob/master/Avatar_API.raml) file
 
 #### Stop Everything
 
