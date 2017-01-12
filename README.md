@@ -55,8 +55,14 @@ sudo docker exec -ti lumen_avatar_php phpunit --stderr
 
 Check the [Avatar_API.raml](https://github.com/matiass/docker-lumen-avatar-api/blob/master/Avatar_API.raml) file
 
-#### Stop Everything
+## Stop Everything
 
 ```bash
 docker-compose down
 ```
+
+# Inconming Features
+
+- Cache
+- A control-script for managing the docker-infrastructure components for Lumen Avatar
+- Email queue
