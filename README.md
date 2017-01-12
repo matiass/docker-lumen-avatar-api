@@ -64,5 +64,5 @@ docker-compose down
 # Inconming Features
 
 - Cache
-- A control-script for managing the docker-infrastructure components for Lumen Avatar
+- A control-script for managing the docker-infrastructure components for API Avatar
 - Email queue
