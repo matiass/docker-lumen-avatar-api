@@ -42,7 +42,7 @@ php:
     MAIL_DRIVER: smtp
     MAIL_HOST: smtp.gmail.com
     MAIL_PORT: 587
-    MAIL_FROM_NAME: Avatar Team
+    MAIL_FROM_NAME: "Avatar Team"
     MAIL_USERNAME: unemail@gmail.com
     MAIL_PASSWORD: 
     MAIL_ENCRYPTION: tls
