@@ -44,7 +44,7 @@ Avatar API is running!
 
 Do you believe me, don't you?
 
-Go to TEST section
+Go to [TEST SECTION](https://github.com/matiass/docker-lumen-avatar-api/blob/master/README.md#how-do-i-test-it)
 
 ## How do i Test it?
 
