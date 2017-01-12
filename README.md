@@ -35,7 +35,7 @@ You have to modify the following variables with your gmail account data to make 
 
 ```bash
 sudo docker-compose up -d
-sudo docker exec -ti lumen_avatar_php composer update
+sudo docker exec -ti lumen_avatar_php composer install
 sudo docker exec -ti lumen_avatar_php php artisan migrate
 ```
 ### FIFTH - Enjoy
