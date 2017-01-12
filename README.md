@@ -58,7 +58,7 @@ Check the [Avatar_API.raml](https://github.com/matiass/docker-lumen-avatar-api/b
 ## Stop Everything
 
 ```bash
-docker-compose down
+sudo docker-compose down
 ```
 
 # Inconming Features
