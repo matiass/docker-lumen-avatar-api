@@ -1,0 +1,177 @@
+#%RAML 1.0
+title: Avatar API
+description: This API has the function of serving and managing Avatars. 
+The service allow to serve the avatars in different sizes and types of image Upload avatars associated with emails and delete avatars.
+version: 1.0.0
+baseUri: /
+types:
+  allowedMimetypes:
+    displayName: supported image formats
+    enum: ["image/jpeg", "image/png", "image/gif", "image/bmp"]
+  emailHash:
+    type: string
+    displayName: Email hash
+    description: HASH MD5 email address, this is used as an avatars id
+  imageUrl:
+    displayName: Default image url.
+    description: this is the url of the image you want to disply when the image hash was not found
+    type: string
+  color:
+    type: string
+    description: hex color code
+    pattern: /^#(?:[0-9a-f]{3}){1,2}$/i
+  defaults:
+    displayName: Defaults
+    description: Posible values default field
+    enum: [ blank, "404",  color, imageUrl ]
+
+  err:
+    type: object
+    properties:
+      code:
+        type: integer
+        description: Error code, a code for indetify the error cause
+      message:
+        type: string
+        description: a simple message explaining cause of the proble
+      link:
+        type: string
+        description: a link to the documentation explaining the error
+
+  avatar:
+    type: object
+    description: object explected when you upload a new avatar image
+    properties:
+      email: string
+      image: string
+      mime-type: allowedMimetypes
+
+/avatars/{emailHash}:
+  uriParameters:
+    emailHash:
+      description: md5 hash of the email address
+      type: emailHash
+  get:
+    description: Get the Avatar file, email hash parameter is an MD5 hash of the
+      avatar's owner email address.
+
+    headers:
+        Accept:
+          required: true
+          type: allowedMimetypes
+
+    queryParameters:
+      d?:
+        displayName: Default image
+        type: defaults
+        description: |
+          the image to use when the api does not recognize de emailHash parameter
+          posible values are:
+            - An url-encoded URI from where to load the image
+            - 404: it will make the service return a 404 error status code
+            - blank: will return a transparent gif
+            - \#ABCDEF: a hex color
+        required: false
+      s?:
+        displayName: Size
+        type: integer
+        description: |
+          this is the size you want de image, the image will allways be a squeare,
+          so if you send 100 you will get a 100 x100 image. default value is 80
+    responses:
+      200:
+        body:
+          image/jpeg:
+          image/png:
+          image/gif:
+          image/bmp:
+      404:
+        description: |
+          the service will only rmeeply with a 404 when the url contains ?d=404
+        body:
+          application/json:
+            type: err
+            example: |
+              {
+                "code":400000,
+                "message": "avatar not found",
+                "link": "http://some.url/docs"
+              }
+  post:
+    description: |
+       Register a new avatar. you must send the image in base64 encoding + the metadata fields
+       the server will process and storage the image, and will send an email with a validation token
+
+    headers:
+       Content-Type:
+         required: true
+         enum: [ "image/jpeg", "image/png", "image/gif", "image/bmp" ]
+    body:
+      application/json:
+        type: avatar
+        example: |
+          {
+            "email": "some@email.addr",
+            "image": "BASE64 encoded file goes here",
+            "mime-type": "image/jpeg"
+          }
+    responses:
+      201:
+      400:
+        body:
+          application/json:
+            type: err
+            example: |
+              {
+                "code":400001,
+                "message": "missing email addres",
+                "link": "http://some.url/docs"
+              }
+  delete:
+    description: Deletes the uploaded file, it will also send an email with a link que te confirm the operation
+    responses:
+      200:
+        body:
+          application/json:
+            example: |
+              {
+                "email": "some@email.addr"
+              }
+      404:
+        body:
+          application/json:
+            type: err
+            example: |
+              {
+                "code":400000,
+                "message": "avatar not found",
+                "link": "http://some.url/docs"
+              }
+
+  /confirmation/{code}:
+    uriParameters:
+      code:
+        description: the code sended by email to the avatar owner
+        type: string
+    get:
+      description: |
+        endpoint for the user to validate de received code after uploading
+        an image or requesting deletion of one
+      responses:
+        200:
+          body:
+            application/json:
+              example: |
+                {
+                  "email": "some@email.addr"
+                }
+        404:
+          body:
+            application/json:
+              type: err
+              example: |
+                {
+                  "code":400000,
+                  "message": "avatar not found",
+                  "link": "http://some.url/docs"
+                }
