@@ -42,7 +42,7 @@ sudo docker exec -ti lumen_avatar_php php artisan migrate
 ```
 ### FIFTH - Enjoy
 
-Avatar API is running!
+Avatar API is running! (http://localhost:80/...)
 
 Do you believe me, don't you?
 
