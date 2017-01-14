@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Services\Validation;
+namespace App\Extension;
 
 use Illuminate\Validation\Validator as IlluminateValidator;
 use Illuminate\Support\Str;
 
-class ValidatorExtended extends IlluminateValidator
+class ValidatorExtension extends IlluminateValidator
 {
 
     /**

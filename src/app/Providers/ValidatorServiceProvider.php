@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Services\Validation;
+namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
-use Illuminate\Support\Facades\Validator;
+use App\Extension\ValidatorExtension;
 
-class ValidationExtensionServiceProvider extends ServiceProvider
+class ValidatorServiceProvider extends ServiceProvider
 {
     public function register()
     {
@@ -20,7 +20,7 @@ class ValidationExtensionServiceProvider extends ServiceProvider
             $messages = array(),
             $customAttributes = array()
         ) {
-            return new ValidatorExtended($translator, $data, $rules, $messages, $customAttributes);
+            return new ValidatorExtension($translator, $data, $rules, $messages, $customAttributes);
         });
     }
 

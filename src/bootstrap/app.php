@@ -86,7 +86,7 @@ $app->singleton(
 
 $app->register(App\Providers\AppServiceProvider::class);
 $app->register(Intervention\Image\ImageServiceProviderLumen::class);
-$app->register(App\Services\Validation\ValidationExtensionServiceProvider::class);
+$app->register(App\Providers\ValidatorServiceProvider::class);
 $app->register(\Illuminate\Filesystem\FilesystemServiceProvider::class);
 // $app->register(App\Providers\AuthServiceProvider::class);
 // $app->register(App\Providers\EventServiceProvider::class);
