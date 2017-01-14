@@ -28,6 +28,7 @@ class AvatarNewImageTest extends TestCase
         $this->assertResponseStatus('201');
         // check existence of file
         // check existentce of avatar ops
+        // delete new file
     }
 
     public function test400()
