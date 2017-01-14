@@ -50,6 +50,8 @@ nginx:
   image: msimone/lumen-avatar-nginx:latest
   command: nginx -g "daemon off;"
   container_name: lumen_avatar_nginx
+  volumes:
+    - ./src/:/app
   links:
     - php
   ports:

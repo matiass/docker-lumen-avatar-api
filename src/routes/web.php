@@ -20,6 +20,3 @@ $app->group(['prefix' => 'avatars/{emailHash}',], function () use ($app) {
 $app->group(['prefix' => 'confirmation'], function () use ($app) {
     $app->get('/{code}', ['uses' => 'AvatarController@confirmation', 'as' => 'confirmation']);
 });
-
-$app->get('avatars/images/{filename}', 'ImageController@getAvatar');
-$app->get('tests/images/{filename}', 'ImageController@getTests');

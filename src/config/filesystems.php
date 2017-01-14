@@ -50,8 +50,8 @@ return [
         ],
         'mock' => [
             'driver' => 'local',
-            'root' => storage_path('app/public/tests/images'),
-            'url' => config('app.url').'/tests/images'
+            'root' => storage_path('app/public/avatars/images/'),
+            'url' => config('app.url').'/avatars/images/'
         ]
     ],
 ];
