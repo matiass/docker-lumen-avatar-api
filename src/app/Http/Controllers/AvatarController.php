@@ -29,12 +29,15 @@ class AvatarController extends Controller
     protected $disk;
 
     /**
-     * initialize image manager and disk
+     * Create a new AvatarController instance.
+     * initialize image manager and disk.
+     * @param  ImageManager  $imgMngr
+     * @param  Storage  $storage
      */
-    public function __construct()
+    public function __construct(ImageManager $imgMngr, Storage $storage)
     {
-        $this->imgMngr = new ImageManager(config('image'));
-        $this->disk = Storage::disk('avatar');
+        $this->imgMngr = $imgMngr->configure(config('image'));
+        $this->disk = $storage::disk('avatar');
     }
 
     /**
