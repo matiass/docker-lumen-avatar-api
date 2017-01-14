@@ -4,6 +4,7 @@ use Laravel\Lumen\Testing\DatabaseMigrations;
 use Laravel\Lumen\Testing\DatabaseTransactions;
 use App\Avatar;
 use App\AvatarOperation;
+use Illuminate\Support\Facades\Storage;
 
 class AvatarConfirmationDeleteTest extends TestCase
 {
@@ -17,6 +18,9 @@ class AvatarConfirmationDeleteTest extends TestCase
         $email = $avtrOp->avatar->email;
         $emailHash = $avtrOp->avatar->email_hash;
         $code = $avtrOp->code;
+        $orgFile = $avtrOp->image_file;
+        $bkpFile = $avtrOp->image_file.'.bkp';
+        Storage::disk('mock')->copy($orgFile, $bkpFile);
         $response = $this->call('GET', "confirmation/$avtrOp->code", [], [], [], []);
         $this->assertResponseOk();
         $this->assertJson($response->getContent(), json_encode(['email' => $email]));
@@ -24,6 +28,8 @@ class AvatarConfirmationDeleteTest extends TestCase
         $avtr = Avatar::find($emailHash);
         $this->assertNull($avtrOp);
         $this->assertNull($avtr);
+        Storage::disk('mock')->move($bkpFile, $orgFile);
+        Storage::disk('mock')->setVisibility($orgFile, 'public');
     }
 
     public function test400()
