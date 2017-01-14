@@ -176,29 +176,4 @@ class ValidatorExtension extends IlluminateValidator
             return Str::snake($key);
         })->toArray();
     }
-//
-//    /**
-//     * Get the inline message for a rule if it exists.
-//     *
-//     * @param  string  $attribute
-//     * @param  string  $lowerRule
-//     * @param  array   $source
-//     * @return string|null
-//     */
-//    protected function getInlineMessage($attribute, $lowerRule, $source = null)
-//    {
-//        $source = $source ?: $this->customMessages;
-//
-//        $keys = ["{$attribute}.{$lowerRule}", $lowerRule];
-//        // First we will check for a custom message for an attribute specific rule
-//        // message for the fields, then we will check for a general custom line
-//        // that is not attribute specific. If we find either we'll return it.
-//        foreach ($keys as $key) {
-//            foreach (array_keys($source) as $sourceKey) {
-//                if (!empty($sourceKey) && Str::is($sourceKey, $key)) {
-//                    return $source[$sourceKey];
-//                }
-//            }
-//        }
-//    }
 }
