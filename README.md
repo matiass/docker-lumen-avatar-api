@@ -22,6 +22,10 @@ You have to modify the following variables with your gmail account data to make 
 
     MAIL_USERNAME: miemail@gmail.com
     MAIL_PASSWORD: mipassword
+    
+E-mails will only be sent when the variable APP_ENV has the following value:
+
+    APP_ENV: production    
 
 ### THIRD - Docker Setup [IF YOU DO NOT HAVE DOCKER]
 
