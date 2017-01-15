@@ -160,7 +160,7 @@ class AvatarController extends Controller
             'code' => $code
         ]);
         $avatar->operations()->save($avatarOperation);
-        if(app()->environment('production')) {
+        if (app()->environment('production')) {
             $url = route('confirmation', ['code' => $code]);
             $from = config('mail.from.address');
             $name = config('mail.from.name');
@@ -201,11 +201,11 @@ class AvatarController extends Controller
             'code' => $code
         ]);
         $avtr->operations()->save($avatarOperation);
-        $url = route('confirmation', ['code' => $code]);
-        $from = config('mail.from.address');
-        $name = config('mail.from.name');
-        $to = $avtr->email;
-        if(app()->environment('production')) {
+        if (app()->environment('production')) {
+            $url = route('confirmation', ['code' => $code]);
+            $from = config('mail.from.address');
+            $name = config('mail.from.name');
+            $to = $avtr->email;
             Mail::send('email.confirmation.register', ['url' => $url], function ($message) use ($from, $name, $to) {
                 $message->from($from, $name);
                 $message->to($to, $to)
