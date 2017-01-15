@@ -6,8 +6,6 @@ use App\Avatar;
 use App\AvatarOperation;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Facades\Validator;
-use Mockery\CountValidator\Exception;
 use Illuminate\Support\Facades\Mail;
 use Intervention\Image\ImageManager;
 
