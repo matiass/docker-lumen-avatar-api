@@ -10,7 +10,8 @@
         "vlucas/phpdotenv": "~2.2",
         "intervention/image": "2.3.8",
         "illuminate/mail": "^5.3",
-        "league/flysystem": "^1.0"
+        "league/flysystem": "^1.0",
+        "intervention/imagecache": "^2.3"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

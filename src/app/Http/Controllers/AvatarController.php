@@ -31,8 +31,8 @@ class AvatarController extends Controller
     /**
      * Create a new AvatarController instance.
      * initialize image manager and disk.
-     * @param  ImageManager  $imgMngr
-     * @param  Storage  $storage
+     * @param  ImageManager $imgMngr
+     * @param  Storage $storage
      */
     public function __construct(ImageManager $imgMngr, Storage $storage)
     {
@@ -77,14 +77,20 @@ class AvatarController extends Controller
             } else {
                 if (!isset($errorRules['url_encoded'])) {
                     $url = $defImg;
-                    $img = $this->imgMngr->make($url)->encode($ext);
+                    $img = $this->imgMngr->cache(function ($image) use ($url, $ext) {
+                        $image->make($url)->encode($ext);
+                    }, config('imagecache.lifetime_callback'), true);
                 } else {
                     if (!isset($errorRules['blank'])) {
-                        $img = $this->imgMngr->canvas($size, $size)->encode('gif');
+                        $img = $this->imgMngr->cache(function ($image) use ($size) {
+                            $image->canvas($size, $size)->encode('gif');
+                        }, config('imagecache.lifetime_callback'), true);
                     } else {
                         if (!isset($errorRules['hex_color'])) {
                             $hexColor = $defImg;
-                            $img = $this->imgMngr->canvas($size, $size, $hexColor)->encode($ext);
+                            $img = $this->imgMngr->cache(function ($image) use ($size, $hexColor, $ext) {
+                                $image->canvas($size, $size, $hexColor)->encode($ext);
+                            }, config('imagecache.lifetime_callback'), true);
                         }
                     }
                 }
@@ -94,7 +100,9 @@ class AvatarController extends Controller
             if ($validator->fails()) {
                 return response()->json($validator->failed());
             }
-            $img = $this->imgMngr->make($this->disk->get($avtr->image_file))->encode($ext);
+            $img = $this->imgMngr->cache(function ($image) use ($avtr, $ext) {
+                $image->make($this->disk->get($avtr->image_file))->encode($ext);
+            }, config('imagecache.lifetime_callback'), true);
         }
         return response($img->response(), 200);
     }
@@ -226,7 +234,7 @@ class AvatarController extends Controller
         }
         switch ($avtrOp->method) {
             case AvatarOperation::METHOD_DELETE:
-                if($this->disk->has($avtrOp->image_file)) {
+                if ($this->disk->has($avtrOp->image_file)) {
                     $this->disk->delete($avtrOp->image_file);
                 }
                 $avtrOp->avatar()->forceDelete();
